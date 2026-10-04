@@ -1,4 +1,4 @@
-<!-- PROTOCOLLO E.D.G. LIVELLO 7 - ULTRA -->
+<!-- PROTOCOLLO E.D.G. LIVELLO 8 - INVIOLABILE -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
   const K1 = "EDG_Rospo_2024_Segreto";
@@ -8,6 +8,7 @@
   const K5 = "Kenekendndoeekkened";
   const K6 = "Sgehajwjwhshshsshshjabwua";
   const K7 = "Cdddddddafwsfvddfdseegyyjol";
+  const K8 = "Cedtsgdgrfrfgf";
   
   function criptaEDG(t){
     let c = CryptoJS.AES.encrypt(t, K1).toString();
@@ -17,9 +18,11 @@
     c = CryptoJS.AES.encrypt(c, K5).toString();
     c = CryptoJS.AES.encrypt(c, K6).toString();
     c = CryptoJS.AES.encrypt(c, K7).toString();
+    c = CryptoJS.AES.encrypt(c, K8).toString();
     return c;
   }
   function decriptaEDG(c){
+    c = CryptoJS.AES.decrypt(c, K8).toString(CryptoJS.enc.Utf8);
     c = CryptoJS.AES.decrypt(c, K7).toString(CryptoJS.enc.Utf8);
     c = CryptoJS.AES.decrypt(c, K6).toString(CryptoJS.enc.Utf8);
     c = CryptoJS.AES.decrypt(c, K5).toString(CryptoJS.enc.Utf8);
@@ -29,5 +32,5 @@
     c = CryptoJS.AES.decrypt(c, K1).toString(CryptoJS.enc.Utf8);
     return c;
   }
-  console.log("✅ E.D.G. LIVELLO 7 ATTIVO!");
+  console.log("✅ E.D.G. LIVELLO 8 ATTIVO - PIU' SICURO DI UNA BANCA!");
 </script>
