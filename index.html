@@ -1,19 +1,18 @@
-<!-- PROTOCOLLO E.D.G. CRITTOGRAFIA -->
+<!-- PROTOCOLLO E.D.G. DOPPIA CRITTOGRAFIA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
-  const CHIAVE_ROSPO = "EDG_Rospo_2024_Segreto";
+  const CHIAVE_1 = "EDG_Rospo_2024_Segreto";
+  const CHIAVE_2 = "INSERISCI_QUI_SECONDA_CHIAVE"; // <-- cambia qui
   
   function criptaEDG(testo){
-    return CryptoJS.AES.encrypt(testo, CHIAVE_ROSPO).toString();
+    let primo = CryptoJS.AES.encrypt(testo, CHIAVE_1).toString();
+    let doppio = CryptoJS.AES.encrypt(primo, CHIAVE_2).toString();
+    return doppio;
   }
   function decriptaEDG(testoCifrato){
-    return CryptoJS.AES.decrypt(testoCifrato, CHIAVE_ROSPO).toString(CryptoJS.enc.Utf8);
+    let primo = CryptoJS.AES.decrypt(testoCifrato, CHIAVE_2).toString(CryptoJS.enc.Utf8);
+    let originale = CryptoJS.AES.decrypt(primo, CHIAVE_1).toString(CryptoJS.enc.Utf8);
+    return originale;
   }
-  
-  // TEST: 
-  // criptaEDG("ciao") -> ti da codice illeggibile
-  // decriptaEDG(codice) -> torna "ciao"
 </script>
-<!-- FINE CRITTOGRAFIA -->
-
-<!-- QUI SOTTO INCOLLEREMO IL CODICE GOOGLE QUANDO ME LO MANDI -->
+<!-- FINE DOPPIA CRITTOGRAFIA -->
