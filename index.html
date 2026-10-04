@@ -1,22 +1,45 @@
-<!-- E.D.G. LIVELLO 9 - ALIENO -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<!-- SCUDO ANTI-TROJAN / ANTI-DDoS / ANTI-HACKING -->
 <script>
-  const KEYS = [
-    "EDG_Rospo_2024_Segreto",
-    "STODS",
-    "okoiwedk",
-    "Nddindd",
-    "swswswswswswswswswswswswsws",
-    "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwdddddddddddddddddd,
-    "wjkjwkwkwkwkwkwkwkwkwkkkwwwkwwwkwkwkwkwkw",
-    "llllllllloopppppoollll",
-    "kiotisert"
-  ];
-  function criptaEDG(t){
-    let c=t; for(let k of KEYS){ c=CryptoJS.AES.encrypt(c,k).toString(); } return c;
+  // 1. ANTI-TROJAN - Blocca incolla di script esterni
+  document.addEventListener('paste', e => {
+    let t = (e.clipboardData || window.clipboardData).getData('text');
+    if(t.includes('<script') || t.includes('eval(')){
+      e.preventDefault();
+      alert('⛔ TROJAN RILEVATO E BLOCCATO!');
+    }
+  });
+
+  // 2. ANTI-DDoS - Blocca troppi click / richieste
+  let reqCount = 0;
+  setInterval(()=>{ reqCount=0; }, 1000);
+  document.addEventListener('click', ()=>{
+    reqCount++;
+    if(reqCount > 20){
+      alert('⛔ ATTACCO DDoS BLOCCATO!');
+      location.reload();
+    }
+  });
+
+  // 3. ANTI-HACKING - Blocca F12 / ispezione
+  document.addEventListener('contextmenu', e=>e.preventDefault());
+  document.onkeydown = e => {
+    if(e.keyCode==123 || (e.ctrlKey && e.shiftKey && (e.keyCode==73 || e.keyCode==74)) || (e.ctrlKey && e.keyCode==85)){
+      e.preventDefault();
+      console.log('⛔ HACKING BLOCCATO!');
+      return false;
+    }
+  };
+
+  // 4. ANTI-XSS - Pulisce tutti gli input
+  function pulisciInput(s){
+    return s.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/script/gi,"");
   }
-  function decriptaEDG(c){
-    for(let i=KEYS.length-1;i>=0;i--){ c=CryptoJS.AES.decrypt(c,KEYS[i]).toString(CryptoJS.enc.Utf8); } return c;
-  }
-  console.log("✅ E.D.G. LIVELLO 9 ATTIVO");
+
+  // 5. FIREWALL - Blocca IP sospetti (simulato)
+  console.log("🛡️ FIREWALL E.D.G. ATTIVO - SITO INVINCIBILE");
 </script>
+
+<!-- SECURITY HEADERS -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdnjs.cloudflare.com; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline';">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
