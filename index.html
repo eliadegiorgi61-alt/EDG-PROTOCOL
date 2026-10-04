@@ -1,36 +1,22 @@
-<!-- PROTOCOLLO E.D.G. LIVELLO 8 - INVIOLABILE -->
+<!-- E.D.G. LIVELLO 9 - ALIENO -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
-  const K1 = "EDG_Rospo_2024_Segreto";
-  const K2 = "STODS";
-  const K3 = "okoiwedk";
-  const K4 = "Nddindd";
-  const K5 = "aijfWIOFVwnv";
-  const K6 = "iopoiopoiop";
-  const K7 = "edg tots protoco";
-  const K8 = "degots";
-  
+  const KEYS = [
+    "EDG_Rospo_2024_Segreto",
+    "STODS",
+    "okoiwedk",
+    "Nddindd",
+    "swswswswswswswswswswswswsws",
+    "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwddddddddddddddddddd,
+    "wjkjwkwkwkwkwkwkwkwkwkkkwwwkwwwkwkwkwkwkw",
+    "llllllllloopppppoollll",
+    "kiotisert"
+  ];
   function criptaEDG(t){
-    let c = CryptoJS.AES.encrypt(t, K1).toString();
-    c = CryptoJS.AES.encrypt(c, K2).toString();
-    c = CryptoJS.AES.encrypt(c, K3).toString();
-    c = CryptoJS.AES.encrypt(c, K4).toString();
-    c = CryptoJS.AES.encrypt(c, K5).toString();
-    c = CryptoJS.AES.encrypt(c, K6).toString();
-    c = CryptoJS.AES.encrypt(c, K7).toString();
-    c = CryptoJS.AES.encrypt(c, K8).toString();
-    return c;
+    let c=t; for(let k of KEYS){ c=CryptoJS.AES.encrypt(c,k).toString(); } return c;
   }
   function decriptaEDG(c){
-    c = CryptoJS.AES.decrypt(c, K8).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K7).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K6).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K5).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K4).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K3).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K2).toString(CryptoJS.enc.Utf8);
-    c = CryptoJS.AES.decrypt(c, K1).toString(CryptoJS.enc.Utf8);
-    return c;
+    for(let i=KEYS.length-1;i>=0;i--){ c=CryptoJS.AES.decrypt(c,KEYS[i]).toString(CryptoJS.enc.Utf8); } return c;
   }
-  console.log("✅ E.D.G. LIVELLO 8 ATTIVO - PIU' SICURO DI UNA BANCA!");
+  console.log("✅ E.D.G. LIVELLO 9 ATTIVO");
 </script>
