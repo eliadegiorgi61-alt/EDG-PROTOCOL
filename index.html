@@ -1,29 +1,31 @@
-<!-- PROTOCOLLO E.D.G. DOPPIA CRITTOGRAFIA - CHIAVI ROSPO + STODS -->
+<!-- PROTOCOLLO E.D.G. QUADRUPLA CRITTOGRAFIA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
-  const CHIAVE_ROSPO = "EDG_Rospo_2024_Segreto";
-  const CHIAVE_STODS = "STODS";
+  const K1 = "EDG_Rospo_2024_Segreto";
+  const K2 = "STODS";
+  const K3 = "okoiwedk";
+  const K4 = "Nddindd";
   
   function criptaEDG(testo){
-    let livello1 = CryptoJS.AES.encrypt(testo, CHIAVE_ROSPO).toString();
-    let livello2 = CryptoJS.AES.encrypt(livello1, CHIAVE_STODS).toString();
-    console.log("🔐 Criptato con ROSPO + STODS:", livello2);
-    return livello2;
+    let c1 = CryptoJS.AES.encrypt(testo, K1).toString();
+    let c2 = CryptoJS.AES.encrypt(c1, K2).toString();
+    let c3 = CryptoJS.AES.encrypt(c2, K3).toString();
+    let c4 = CryptoJS.AES.encrypt(c3, K4).toString();
+    console.log("🔐 QUADRUPLO CRIPTATO:", c4);
+    return c4;
   }
-  function decriptaEDG(testoCifrato){
+  function decriptaEDG(cifrato){
     try{
-      let livello1 = CryptoJS.AES.decrypt(testoCifrato, CHIAVE_STODS).toString(CryptoJS.enc.Utf8);
-      let originale = CryptoJS.AES.decrypt(livello1, CHIAVE_ROSPO).toString(CryptoJS.enc.Utf8);
-      console.log("🔓 Decriptato:", originale);
-      return originale;
+      let d3 = CryptoJS.AES.decrypt(cifrato, K4).toString(CryptoJS.enc.Utf8);
+      let d2 = CryptoJS.AES.decrypt(d3, K3).toString(CryptoJS.enc.Utf8);
+      let d1 = CryptoJS.AES.decrypt(d2, K2).toString(CryptoJS.enc.Utf8);
+      let orig = CryptoJS.AES.decrypt(d1, K1).toString(CryptoJS.enc.Utf8);
+      console.log("🔓 DECRIPTATO:", orig);
+      return orig;
     }catch(e){
-      console.error("Chiave errata!");
+      console.error("❌ Serve: ROSPO + STODS + okoiwedk + Nddindd");
       return null;
     }
   }
-  
-  // Per testare apri la console (F12) e scrivi:
-  // criptaEDG("ciao mondo")
-  // decriptaEDG("codice lunghissimo che ti esce")
 </script>
-<!-- FINE PROTOCOLLO E.D.G. -->
+<!-- FINE PROTOCOLLO E.D.G. LIVELLO 4 -->
