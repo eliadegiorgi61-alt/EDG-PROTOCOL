@@ -1,31 +1,35 @@
-<!-- PROTOCOLLO E.D.G. QUADRUPLA CRITTOGRAFIA -->
+<!-- PROTOCOLLO E.D.G. PENTA CRITTOGRAFIA - LIVELLO 5 ULTRA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
   const K1 = "EDG_Rospo_2024_Segreto";
   const K2 = "STODS";
   const K3 = "okoiwedk";
   const K4 = "Nddindd";
+  const K5 = "Kenekendndoeekkened";
   
   function criptaEDG(testo){
-    let c1 = CryptoJS.AES.encrypt(testo, K1).toString();
-    let c2 = CryptoJS.AES.encrypt(c1, K2).toString();
-    let c3 = CryptoJS.AES.encrypt(c2, K3).toString();
-    let c4 = CryptoJS.AES.encrypt(c3, K4).toString();
-    console.log("🔐 QUADRUPLO CRIPTATO:", c4);
-    return c4;
+    let c = CryptoJS.AES.encrypt(testo, K1).toString();
+    c = CryptoJS.AES.encrypt(c, K2).toString();
+    c = CryptoJS.AES.encrypt(c, K3).toString();
+    c = CryptoJS.AES.encrypt(c, K4).toString();
+    c = CryptoJS.AES.encrypt(c, K5).toString();
+    console.log("🔐 PENTA-CRIPTATO LIVELLO 5:", c);
+    return c;
   }
   function decriptaEDG(cifrato){
     try{
-      let d3 = CryptoJS.AES.decrypt(cifrato, K4).toString(CryptoJS.enc.Utf8);
-      let d2 = CryptoJS.AES.decrypt(d3, K3).toString(CryptoJS.enc.Utf8);
-      let d1 = CryptoJS.AES.decrypt(d2, K2).toString(CryptoJS.enc.Utf8);
-      let orig = CryptoJS.AES.decrypt(d1, K1).toString(CryptoJS.enc.Utf8);
-      console.log("🔓 DECRIPTATO:", orig);
-      return orig;
+      let c = CryptoJS.AES.decrypt(cifrato, K5).toString(CryptoJS.enc.Utf8);
+      c = CryptoJS.AES.decrypt(c, K4).toString(CryptoJS.enc.Utf8);
+      c = CryptoJS.AES.decrypt(c, K3).toString(CryptoJS.enc.Utf8);
+      c = CryptoJS.AES.decrypt(c, K2).toString(CryptoJS.enc.Utf8);
+      c = CryptoJS.AES.decrypt(c, K1).toString(CryptoJS.enc.Utf8);
+      console.log("🔓 DECRIPTATO:", c);
+      return c;
     }catch(e){
-      console.error("❌ Serve: ROSPO + STODS + okoiwedk + Nddindd");
+      console.error("❌ Mancano chiavi: ROSPO + STODS + okoiwedk + Nddindd + Kenekendndoeekkened");
       return null;
     }
   }
+  console.log("✅ E.D.G. PROTOCOLLO LIVELLO 5 ATTIVO");
 </script>
-<!-- FINE PROTOCOLLO E.D.G. LIVELLO 4 -->
+<!-- FINE PENTA PROTOCOLLO -->
