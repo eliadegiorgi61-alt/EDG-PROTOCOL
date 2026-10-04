@@ -1,4 +1,4 @@
-<!-- PROTOCOLLO E.D.G. PENTA CRITTOGRAFIA - LIVELLO 5 ULTRA -->
+<!-- PROTOCOLLO E.D.G. LIVELLO 6 - ESA CRITTOGRAFIA -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
   const K1 = "EDG_Rospo_2024_Segreto";
@@ -6,30 +6,25 @@
   const K3 = "okoiwedk";
   const K4 = "Nddindd";
   const K5 = "Kenekendndoeekkened";
+  const K6 = "Sgehajwjwhshshsshshjabwua";
   
-  function criptaEDG(testo){
-    let c = CryptoJS.AES.encrypt(testo, K1).toString();
+  function criptaEDG(t){
+    let c = CryptoJS.AES.encrypt(t, K1).toString();
     c = CryptoJS.AES.encrypt(c, K2).toString();
     c = CryptoJS.AES.encrypt(c, K3).toString();
     c = CryptoJS.AES.encrypt(c, K4).toString();
     c = CryptoJS.AES.encrypt(c, K5).toString();
-    console.log("🔐 PENTA-CRIPTATO LIVELLO 5:", c);
+    c = CryptoJS.AES.encrypt(c, K6).toString();
     return c;
   }
-  function decriptaEDG(cifrato){
-    try{
-      let c = CryptoJS.AES.decrypt(cifrato, K5).toString(CryptoJS.enc.Utf8);
-      c = CryptoJS.AES.decrypt(c, K4).toString(CryptoJS.enc.Utf8);
-      c = CryptoJS.AES.decrypt(c, K3).toString(CryptoJS.enc.Utf8);
-      c = CryptoJS.AES.decrypt(c, K2).toString(CryptoJS.enc.Utf8);
-      c = CryptoJS.AES.decrypt(c, K1).toString(CryptoJS.enc.Utf8);
-      console.log("🔓 DECRIPTATO:", c);
-      return c;
-    }catch(e){
-      console.error("❌ Mancano chiavi: ROSPO + STODS + okoiwedk + Nddindd + Kenekendndoeekkened");
-      return null;
-    }
+  function decriptaEDG(c){
+    c = CryptoJS.AES.decrypt(c, K6).toString(CryptoJS.enc.Utf8);
+    c = CryptoJS.AES.decrypt(c, K5).toString(CryptoJS.enc.Utf8);
+    c = CryptoJS.AES.decrypt(c, K4).toString(CryptoJS.enc.Utf8);
+    c = CryptoJS.AES.decrypt(c, K3).toString(CryptoJS.enc.Utf8);
+    c = CryptoJS.AES.decrypt(c, K2).toString(CryptoJS.enc.Utf8);
+    c = CryptoJS.AES.decrypt(c, K1).toString(CryptoJS.enc.Utf8);
+    return c;
   }
-  console.log("✅ E.D.G. PROTOCOLLO LIVELLO 5 ATTIVO");
+  console.log("✅ E.D.G. LIVELLO 6 ATTIVO - 6 chiavi!");
 </script>
-<!-- FINE PENTA PROTOCOLLO -->
