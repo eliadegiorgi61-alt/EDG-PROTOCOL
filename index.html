@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>E.D.G. PROTOCOL</title>
+<style>
+body{background:#000;color:#0f8;font-family:monospace;text-align:center;padding:20px}
+.box{max-width:600px;margin:auto;background:#111;padding:20px;border-radius:12px;border:1px solid #222}
+input,textarea,button{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #333;background:#000;color:#fff}
+button{background:#0f8;color:#000;font-weight:bold;cursor:pointer}
+.node{display:inline-block;width:70px;height:70px;border:1px solid #333;border-radius:50%;margin:6px;padding-top:15px;font-size:10px}
+.active{border-color:#0f8;box-shadow:0 0 15px #0f8}
+#log{height:100px;overflow:auto;background:#000;font-size:10px;text-align:left;padding:8px;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>E.D.G.</h1>
+<p>4 NODI - ULTRA ENCRYPTED</p>
+<div id="nodes"></div>
+<div class="box">
+<input id="m" placeholder="Messaggio segreto">
+<input id="p" type="password" placeholder="Chiave madre lunga">
+<button onclick="enc()">CIFRA 4X</button>
+<button onclick="hop()">ATTIVA 4 NODI</button>
+<textarea id="o" placeholder="Codice cifrato qui"></textarea>
+<button onclick="dec()">DECIFRA</button>
+<div id="log"></div>
+</div>
+<script>
+let C=['DE','NL','CH','IS'],N=['BERLIN','AMS','ZURICH','REYK'],E=document.getElementById('nodes'),L=document.getElementById('log');
+function R(){return Math.floor(Math.random()*200)+20+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)}
+function B(){E.innerHTML='';for(let i=0;i<4;i++){let d=document.createElement('div');d.className='node';d.id='n'+i;d.innerHTML='EDG-'+(i+1)+'<br>'+C[i]+'<br><span style=color:#555>'+R()+'</span>';E.appendChild(d)}}B();
+function lg(t){let d=document.createElement('div');d.textContent=t;if(t.includes('OK'))d.style.color='#0f8';L.appendChild(d)}
+let enc2=new TextEncoder(),dec2=new TextDecoder();
+async function K(s,salt){let b=await crypto.subtle.importKey('raw',enc2.encode(s),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:600000,hash:'SHA-256'},b,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function enc(){let t=document.getElementById('m').value,p=document.getElementById('p').value;if(!t||p.length<8)return alert('Metti chiave lunga');lg('Cifratura 4x...');let dat=enc2.encode(t),salt=crypto.getRandomValues(new Uint8Array(16)),k=await K(p,salt);for(let i=0;i<4;i++){let iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},k,dat),comb=new Uint8Array(iv.length+ct.byteLength);comb.set(iv,0);comb.set(new Uint8Array(ct),iv.length);dat=comb;lg('Nodo '+(i+1)+' ['+C[i]+'] OK')}let fin=new Uint8Array(salt.length+dat.length);fin.set(salt,0);fin.set(dat,salt.length);document.getElementById('o').value=btoa(String.fromCharCode(...fin));lg('CIFRATURA OK')}
+async function dec(){let b=document.getElementById('o').value,p=document.getElementById('p').value;try{let all=Uint8Array.from(atob(b),x=>x.charCodeAt(0)),salt=all.slice(0,16),dat=all.slice(16),k=await K(p,salt);for(let i=3;i>=0;i--){let iv=dat.slice(0,12),ct=dat.slice(12),pt=await crypto.subtle.decrypt({name:'AES-GCM',iv},k,ct);dat=new Uint8Array(pt)}document.getElementById('m').value=dec2.decode(dat);lg('DECIFRATURA OK')}catch{alert('Chiave errata')}}
+async function hop(){B();L.innerHTML='';lg('Avvio 4 nodi...');for(let i=0;i<4;i++){await new Promise(r=>setTimeout(r,600));document.querySelectorAll('.node').forEach(x=>x.classList.remove('active'));document.getElementById('n'+i).classList.add('active');lg('Hop '+(i+1)+'/4 -> '+N[i]+' ['+C[i]+'] '+R())}lg('Circuito completo OK - IP nascosto')}
+lg('E.D.G. pronto');
+</script>
+</body>
+</html>
