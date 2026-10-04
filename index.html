@@ -1,18 +1,29 @@
-<!-- PROTOCOLLO E.D.G. DOPPIA CRITTOGRAFIA -->
+<!-- PROTOCOLLO E.D.G. DOPPIA CRITTOGRAFIA - CHIAVI ROSPO + STODS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script>
-  const CHIAVE_1 = "EDG_Rospo_2024_Segreto";
-  const CHIAVE_2 = "INSERISCI_QUI_SECONDA_CHIAVE"; // <-- cambia qui
+  const CHIAVE_ROSPO = "EDG_Rospo_2024_Segreto";
+  const CHIAVE_STODS = "STODS";
   
   function criptaEDG(testo){
-    let primo = CryptoJS.AES.encrypt(testo, CHIAVE_1).toString();
-    let doppio = CryptoJS.AES.encrypt(primo, CHIAVE_2).toString();
-    return doppio;
+    let livello1 = CryptoJS.AES.encrypt(testo, CHIAVE_ROSPO).toString();
+    let livello2 = CryptoJS.AES.encrypt(livello1, CHIAVE_STODS).toString();
+    console.log("🔐 Criptato con ROSPO + STODS:", livello2);
+    return livello2;
   }
   function decriptaEDG(testoCifrato){
-    let primo = CryptoJS.AES.decrypt(testoCifrato, CHIAVE_2).toString(CryptoJS.enc.Utf8);
-    let originale = CryptoJS.AES.decrypt(primo, CHIAVE_1).toString(CryptoJS.enc.Utf8);
-    return originale;
+    try{
+      let livello1 = CryptoJS.AES.decrypt(testoCifrato, CHIAVE_STODS).toString(CryptoJS.enc.Utf8);
+      let originale = CryptoJS.AES.decrypt(livello1, CHIAVE_ROSPO).toString(CryptoJS.enc.Utf8);
+      console.log("🔓 Decriptato:", originale);
+      return originale;
+    }catch(e){
+      console.error("Chiave errata!");
+      return null;
+    }
   }
+  
+  // Per testare apri la console (F12) e scrivi:
+  // criptaEDG("ciao mondo")
+  // decriptaEDG("codice lunghissimo che ti esce")
 </script>
-<!-- FINE DOPPIA CRITTOGRAFIA -->
+<!-- FINE PROTOCOLLO E.D.G. -->
