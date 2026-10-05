@@ -2,41 +2,28 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E.D.G. ORNET - 4 NODI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>OrNET Browser</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Share Tech Mono',monospace;}
-body{background:#05050a;color:#00ff88;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;}
-h1{font-size:1.8em;text-align:center;margin:15px 0;text-shadow:0 0 20px #00ff88;letter-spacing:3px;}
-.sub{color:#888;font-size:0.75em;margin-bottom:20px;text-align:center;}
-.search-box{width:100%;max-width:500px;position:relative;margin:15px 0;}
-.search-box input{width:100%;padding:18px 50px 18px 18px;background:#0a0a14;border:2px solid #00ff88;border-radius:12px;color:#00ff88;font-size:1.1em;outline:none;box-shadow:0 0 15px rgba(0,255,136,0.3);}
-.search-box button{position:absolute;right:8px;top:8px;bottom:8px;background:#00ff88;color:#000;border:none;padding:0 18px;border-radius:8px;font-weight:bold;cursor:pointer;}
-.engines{display:flex;gap:8px;justify-content:center;margin:10px 0;flex-wrap:wrap;width:100%;max-width:500px;}
-.engines button{flex:1;min-width:90px;padding:10px;background:#111;border:1px solid #333;color:#aaa;border-radius:8px;cursor:pointer;font-size:0.8em;}
-.engines button.active{border-color:#00ff88;color:#00ff88;background:#0a2215;box-shadow:0 0 10px rgba(0,255,136,0.3);}
-.nodes{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin:20px 0;}
-.node{width:60px;height:60px;border-radius:50%;border:2px solid #333;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.5s;}
-.node.active{border-color:#00ff88;background:#0a2215;box-shadow:0 0 25px #00ff88;transform:scale(1.1);}
-.node.done{border-color:#00ff88;background:#00ff88;color:#000;}
-.line{flex:1;height:2px;background:#222;margin:0 -5px;}
-.line.active{background:#00ff88;box-shadow:0 0 10px #00ff88;}
-.log{width:100%;max-width:500px;background:#08080f;border:1px solid #222;border-radius:10px;padding:15px;min-height:130px;font-size:0.8em;color:#aaa;margin-top:15px;}
-.log div{margin:4px 0;}
-.log div.ok{color:#00ff88;}
-.status{margin-top:12px;font-size:0.9em;text-align:center;min-height:22px;}
-.badge{margin-top:15px;background:rgba(0,255,136,0.1);border:1px solid #00ff88;padding:8px 15px;border-radius:20px;font-size:0.7em;}
-</style>
-</head>
-<body>
-<h1>🔒 E.D.G. ORNET<br>4-NODI PROTOCOL</h1>
-<div class="sub">PIU' SICURO DEL PENTAGONO // GOOGLE + WIKI + SAFARI</div>
-
-<div class="search-box">
-<input id="q" placeholder="Cerca anonimo... es: elon musk">
-<button onclick="startORNET()">▶</button>
-</div>
-
-<div class="engines">
-<button id="bGoogle" class="active" onclick="setEngine('google')">🔵 GOOGLE
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,sans-serif;}
+body{background:#000;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
+.top{height:28px;background:#1a1a1a;display:flex;justify-content:space-between;align-items:center;padding:0 12px;font-size:13px;color:#fff;}
+.urlbar{height:48px;background:#1a1a1a;display:flex;align-items:center;padding:0 8px;gap:8px;border-bottom:1px solid #333;}
+.urlbar .domain{background:#2a2a2a;border-radius:18px;padding:6px 12px;display:flex;align-items:center;gap:6px;flex:1;font-size:13px;}
+.urlbar .x{font-size:16px;padding:4px;}
+.urlbar .shield{color:#7a5cff;}
+.content{flex:1;overflow-y:auto;background:#111;position:relative;padding-bottom:60px;}
+.intro-card{background:linear-gradient(135deg,#1a0b2e 0%,#0f0f0f 100%);margin:12px;border-radius:16px;padding:16px;position:relative;border:1px solid #333;}
+.intro-card .top-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#aaa;margin-bottom:8px;}
+.intro-card h2{font-size:16px;margin:8px 0;text-align:center;}
+.intro-card input{width:100%;background:#0a0a0a;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;margin:8px 0;}
+.intro-card .go{position:absolute;right:24px;top:48px;background:#7a5cff;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;}
+.tutto-card{background:#1e1e2e;margin:12px;border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;border:1px solid #3a3a5a;}
+.tutto-card .left{display:flex;align-items:center;gap:10px;}
+.tutto-card .icon{width:32px;height:32px;background:#2a2a4a;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.socials{display:flex;gap:12px;margin:12px;padding:0 12px;}
+.socials div{width:36px;height:36px;background:#1a1a1a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.section{margin:16px 12px;}
+.section h3{font-size:13px;color:#aaa;margin-bottom:8px;}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#1a1a1a;border-radius:12px;margin:6px 0;}
+.vpn{position:fixed;bottom:80px;right:12
