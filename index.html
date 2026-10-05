@@ -6,8 +6,28 @@
 <title>EDG</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.logo{font-size:90px;letter-spacing:-5px;margin-bottom:25px}
-.logo span:nth-child(1){color:#4285f4}
-.logo span:nth-child(2){color:#ea4335}
-.logo span:nth-child(3){color:#fbbc05}
-.search{width:90%;max-width:580px;border:1px solid #dfe1e5;border-radius:24px;height:48px;display:flex;align-items:center;padding:0 16px;box-shadow
+.logo{font-size:92px;font-weight:800;letter-spacing:-2px;color:#111;margin-bottom:25px;font-family: 'Courier New', monospace}
+.search{width:90%;max-width:580px;border:1px solid #111;border-radius:8px;height:48px;display:flex;align-items:center;padding:0 16px}
+.search input{flex:1;border:0;outline:0;font-size:16px;margin:0 10px}
+.btns{margin-top:25px;display:flex;gap:12px}
+.btns button{padding:10px 18px;background:#111;color:#fff;border:0;border-radius:8px;cursor:pointer;font-weight:700}
+#status{margin-top:15px;font-size:13px;color:#555}
+.nodes{display:flex;gap:8px;margin-top:15px;display:none}
+.nodes.show{display:flex}
+.node{width:32px;height:32px;border-radius:50%;border:2px solid #111;display:flex;align-items:center;justify-content:center;font-size:12px}
+.node.ok{background:#111;color:#fff}
+</style>
+</head>
+<body>
+<div class="logo">EDG</div>
+<form id="f" style="width:100%;display:flex;flex-direction:column;align-items:center">
+<div class="search"><input id="q" type="text" placeholder="Cerca nel protocollo..." autocomplete="off"></div>
+<div class="btns"><button type="submit">CERCA</button></div>
+</form>
+<div class="nodes" id="nodes">
+<div class="node" id="n1">US</div><div class="node" id="n2">CH</div><div class="node" id="n3">IS</div><div class="node" id="n4">PA</div>
+</div>
+<div id="status"></div>
+<script>
+const f=document.getElementById('f'),q=document.getElementById('q'),nodes=document.getElementById('nodes'),status=document.getElementById('status');
+f.onsubmit=
