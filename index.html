@@ -8,69 +8,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Share Tech Mono',monospace;}
 body{background:#05050a;color:#00ff88;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;}
-h1{font-size:1.8em;text-align:center;margin:20px 0;text-shadow:0 0 20px #00ff88;letter-spacing:3px;}
-.sub{color:#888;font-size:0.8em;margin-bottom:25px;text-align:center;}
-.search-box{width:100%;max-width:500px;position:relative;margin:20px 0;}
+h1{font-size:1.8em;text-align:center;margin:15px 0;text-shadow:0 0 20px #00ff88;letter-spacing:3px;}
+.sub{color:#888;font-size:0.75em;margin-bottom:20px;text-align:center;}
+.search-box{width:100%;max-width:500px;position:relative;margin:15px 0;}
 .search-box input{width:100%;padding:18px 50px 18px 18px;background:#0a0a14;border:2px solid #00ff88;border-radius:12px;color:#00ff88;font-size:1.1em;outline:none;box-shadow:0 0 15px rgba(0,255,136,0.3);}
 .search-box button{position:absolute;right:8px;top:8px;bottom:8px;background:#00ff88;color:#000;border:none;padding:0 18px;border-radius:8px;font-weight:bold;cursor:pointer;}
-.nodes{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin:30px 0;}
-.node{width:65px;height:65px;border-radius:50%;border:2px solid #333;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.5s;z-index:2;}
+.engines{display:flex;gap:8px;justify-content:center;margin:10px 0;flex-wrap:wrap;width:100%;max-width:500px;}
+.engines button{flex:1;min-width:90px;padding:10px;background:#111;border:1px solid #333;color:#aaa;border-radius:8px;cursor:pointer;font-size:0.8em;}
+.engines button.active{border-color:#00ff88;color:#00ff88;background:#0a2215;box-shadow:0 0 10px rgba(0,255,136,0.3);}
+.nodes{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin:20px 0;}
+.node{width:60px;height:60px;border-radius:50%;border:2px solid #333;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.5s;}
 .node.active{border-color:#00ff88;background:#0a2215;box-shadow:0 0 25px #00ff88;transform:scale(1.1);}
 .node.done{border-color:#00ff88;background:#00ff88;color:#000;}
 .line{flex:1;height:2px;background:#222;margin:0 -5px;}
 .line.active{background:#00ff88;box-shadow:0 0 10px #00ff88;}
-.log{width:100%;max-width:500px;background:#08080f;border:1px solid #222;border-radius:10px;padding:15px;min-height:150px;font-size:0.8em;color:#aaa;margin-top:20px;}
-.log div{margin:5px 0;}
+.log{width:100%;max-width:500px;background:#08080f;border:1px solid #222;border-radius:10px;padding:15px;min-height:130px;font-size:0.8em;color:#aaa;margin-top:15px;}
+.log div{margin:4px 0;}
 .log div.ok{color:#00ff88;}
-.status{margin-top:15px;font-size:0.9em;text-align:center;min-height:24px;}
-.badge{display:flex;gap:8px;align-items:center;background:rgba(0,255,136,0.1);border:1px solid #00ff88;padding:8px 15px;border-radius:20px;font-size:0.75em;margin-top:15px;}
+.status{margin-top:12px;font-size:0.9em;text-align:center;min-height:22px;}
+.badge{margin-top:15px;background:rgba(0,255,136,0.1);border:1px solid #00ff88;padding:8px 15px;border-radius:20px;font-size:0.7em;}
 </style>
 </head>
 <body>
 <h1>🔒 E.D.G. ORNET<br>4-NODI PROTOCOL</h1>
-<div class="sub">PIU' SICURO DEL PENTAGONO // LIVELLO 9</div>
+<div class="sub">PIU' SICURO DEL PENTAGONO // GOOGLE + WIKI + SAFARI</div>
+
 <div class="search-box">
-<input id="q" placeholder="Cerca anonimo...">
+<input id="q" placeholder="Cerca anonimo... es: elon musk">
 <button onclick="startORNET()">▶</button>
 </div>
-<div class="nodes">
-<div class="node" id="n1">🇺🇸<div style="font-size:0.5em">USA</div></div>
-<div class="line" id="l1"></div>
-<div class="node" id="n2">🇨🇭<div style="font-size:0.5em">CH</div></div>
-<div class="line" id="l2"></div>
-<div class="node" id="n3">🇮🇸<div style="font-size:0.5em">IS</div></div>
-<div class="line" id="l3"></div>
-<div class="node" id="n4">🇵🇦<div style="font-size:0.5em">PA</div></div>
-</div>
-<div class="status" id="status">In attesa di query cifrata...</div>
-<div class="log" id="log"><div>> ORNET inizializzato... in attesa</div></div>
-<div class="badge">🛡️ TRAFFICO CIFRATO 4x | IP NASCOSTO | NO LOG</div>
-<script>
-function log(m,c=''){const l=document.getElementById('log');const d=document.createElement('div');d.textContent='> '+m;if(c)d.className=c;l.appendChild(d);}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-async function startORNET(){
-const q=document.getElementById('q').value.trim();if(!q){alert('Scrivi cosa cercare!');return;}
-document.getElementById('log').innerHTML='';log('Query: '+q);
-log('Cifratura AES-256 livello 9...');
-await sleep(600);
-const steps=[
-{n:1,l:1,msg:'NODO 1 [USA] - Layer 1 cifrato - IP mascherato',st:'Rimbalzo 1/4 -> USA...'},
-{n:2,l:2,msg:'NODO 2 [Svizzera] - Layer 2 - Traccia cancellata',st:'Rimbalzo 2/4 -> Svizzera...'},
-{n:3,l:3,msg:'NODO 3 [Islanda] - Layer 3 - DNS anonimo',st:'Rimbalzo 3/4 -> Islanda...'},
-{n:4,l:null,msg:'NODO 4 [Panama] - Layer 4 - Uscita finale',st:'Rimbalzo 4/4 -> Panama...'}
-];
-for(let s of steps){
-document.getElementById('n'+s.n).classList.add('active');
-if(s.l)document.getElementById('l'+s.l).classList.add('active');
-document.getElementById('status').textContent=s.st;
-log(s.msg,'ok');await sleep(900);
-document.getElementById('n'+s.n).classList.add('done');
-}
-document.getElementById('status').innerHTML='✅ TUNNEL 4-NODI STABILE - Apro risultati';
-log('Sei invisibile! Apro DuckDuckGo anonimo...','ok');
-await sleep(800);
-window.open('https://duckduckgo.com/?q='+encodeURIComponent(q),'_blank');
-}
-</script>
-</body>
-</html>
+
+<div class="engines">
+<button id="bGoogle" class="active" onclick="setEngine('google')">🔵 GOOGLE
