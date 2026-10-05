@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E.D.G. MESSAGGERO ULTRA-SEGRETO</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<style>
+body{background:#000;color:#00ff88;font-family:monospace;padding:20px}
+.box{border:2px solid #00ff88;padding:20px;border-radius:15px;max-width:600px;margin:auto;background:#111}
+input,textarea{width:100%;background:#000;color:#00ff88;border:1px solid #00ff88;padding:12px;margin:8px 0;border-radius:8px}
+button{width:100%;padding:15px;background:#00ff88;color:#000;font-weight:bold;border:none;border-radius:8px;cursor:pointer;margin-top:10px;font-size:16px}
+button:hover{background:#00cc6a}
+.linkbox{background:#000;padding:10px;word-break:break-all;border:1px dashed #00ff88;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🔐 E.D.G. MESSAGGIO CRITTATO LIVELLO 9</h2>
+<textarea id="msg" rows="4" placeholder="Scrivi messaggio segreto..."></textarea>
+<input id="k1" type="password" placeholder="Chiave 1">
+<input id="k2" type="password" placeholder="Chiave 2">
+<input id="k3" type="password" placeholder="Chiave 3">
+<input id="k4" type="password" placeholder="Chiave 4">
+<input id="k5" type="password" placeholder="Chiave 5">
+<input id="k6" type="password" placeholder="Chiave 6">
+<input id="k7" type="password" placeholder="Chiave 7">
+<input id="k8" type="password" placeholder="Chiave 8">
+<input id="k9" type="password" placeholder="Chiave 9">
+
+<button onclick="cripta()">🔒 CRIPTA E GENERA LINK</button>
+<button onclick="decripta()" style="background:#111;color:#00ff88;border:2px solid #00ff88">🔓 DECRIPTA MESSAGGIO</button>
+
+<div id="out" class="linkbox" style="display:none"></div>
+</div>
+
+<script>
+function getKeys(){
+  let k="";
+  for(let i=1;i<=9;i++) k+=document.getElementById('k'+i).value;
+  return k;
+}
+function pulisci(s){return s.replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+function cripta(){
+  let m=document.getElementById('msg').value;
+  let keys=getKeys();
+  if(m.length<2 || keys.length<9){alert("Scrivi messaggio e 9 chiavi!");return;}
+  let superKey = CryptoJS.SHA256(keys).toString();
+  let cripto = CryptoJS.AES.encrypt(pulisci(m), superKey).toString();
+  let link = location.href.split('?')[0] + "?secret=" + encodeURIComponent(cripto);
+  document.getElementById('out').style.display='block';
+  document.getElementById('out').innerHTML = "✅ MESSAGGIO BLINDATO!<br><br>LINK SEGRETO:<br>" + link + "<br><br><button onclick=\"navigator.clipboard.writeText('"+link+"')\">📋 COPIA LINK</button>";
+}
+
+function decripta(){
+  let keys=getKeys();
+  let params = new URLSearchParams(location.search);
+  let secret = params.get('secret') || document.getElementById('msg').value;
+  try{
+    let superKey = CryptoJS.SHA256(keys).toString();
+    let de = CryptoJS.AES.decrypt(secret, superKey).toString(CryptoJS.enc.Utf8);
+    if(!de) throw "err";
+    document.getElementById('out').style.display='block';
+    document.getElementById('out').innerHTML = "🔓 MESSAGGIO DECRITTATO:<br><br><h2>"+de+"</h2>";
+  }catch(e){
+    alert("⛔ CHIAVI ERRATE O LINK NON VALIDO!");
+  }
+}
+
+// auto-decripta se apri con link
+window.onload=()=>{
+  if(location.search.includes('secret')){
+    document.getElementById('msg').placeholder="Incolla le 9 chiavi e premi DECRIPTA";
+  }
+}
+</script>
+</body>
+</html>
